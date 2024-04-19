@@ -64,7 +64,7 @@ chmod -R 770 apeaj
 ###############
 # SET IPTABLE #
 ###############
-apt install -y iptables iptables-persistent
+DEBIAN_FRONTEND=noninteractive apt install -y iptables iptables-persistent
 iptables -P INPUT DROP
 iptables -P OUTPUT DROP
 iptables -A INPUT -i lo -j ACCEPT
