@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+
+  webapeaj:
+    container_name: webapeaj
+    image: arthur609/webapeaj:latest
+    restart: always
+    depends_on:
+      - dbapeaj
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./apeaj:/var/www/html/apeaj
+
+  dbapeaj:
+    container_name: dbapeaj
+    image: arthur609/dbapeaj:latest
+    restart: always
+    volumes:
+      - ./dbapeaj-data:/var/lib/mysql
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin
+    restart: always
+    depends_on:
+      - dbapeaj
+    ports:
+      - 8000:80
+    environment:
+      - PMA_HOST=dbapeaj
+      - PMA_PORT=3306
+
+volumes:
+  apeaj:
+  dbapeaj-data:

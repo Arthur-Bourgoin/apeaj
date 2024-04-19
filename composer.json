@@ -1,0 +1,23 @@
+{
+    "name": "arthur/apeaj",
+    "description": "Web development project for the association APEAJ",
+    "authors": [
+        {
+            "name": "Arthur Bourfoin",
+            "email": "arthur.bourgoin@etu.iut-tlse3.fr"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "app\\": "app/",
+            "config\\": "config/"
+        }
+    },
+    "require": {
+        "altorouter/altorouter": "^2.0",
+        "phpoffice/phpspreadsheet": "^1.29"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5"
+    }
+}

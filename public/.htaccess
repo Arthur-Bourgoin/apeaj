@@ -1,0 +1,9 @@
+RewriteEngine On
+#RewriteBase /
+
+#RewriteCond %{REQUEST_FILENAME} !-f #vrai si le fichier n'existe pas
+#RewriteCond %{REQUEST_FILENAME} !-d #vrai si le dossier n'existe pas
+
+RewriteCond %{REQUEST_URI} !.+\.(css|js|png|pdf|jpg|bmp|jfif|mp3|mp4|webp|jpeg|avif|woff|woff2)$
+
+RewriteRule . index.php [L]
