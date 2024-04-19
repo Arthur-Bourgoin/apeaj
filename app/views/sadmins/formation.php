@@ -57,7 +57,7 @@ ob_start();
                 </div>
                 <form action="<?= $_SERVER["REQUEST_URI"] ?>" method="POST">
                     <input type="hidden" name="action" value="deleteTraining">
-                    <input type="hidden" name="idTraining" value="<?= $training->idTraining ?>">
+                    <input type="hidden" name="idTraining" value="<?= htmlentities($training->idTraining) ?>">
                     <button type="submit" class="btn btn-primary btn-removed-training">
                         <i class="bi bi-trash me-2"></i>Suppression
                     </button>
@@ -133,16 +133,16 @@ ob_start();
                             <div class="col-8">
                                 <div class="">
                                     <label for="inputName" class="form-label">Nom de la formation</label>
-                                    <input id="inputName" type="text" class="form-control" name="wording" value="<?= $training->wording ?>" required>
+                                    <input id="inputName" type="text" class="form-control" name="wording" value="<?= htmlentities($training->wording) ?>" required>
                                 </div>
                                 <div class="">
                                     <label for="inputLevel" class="form-label">Niveau de la formation</label>
-                                    <input id="inputLevel" type="text" class="form-control" name="qualifLevel" value="<?= $training->qualifLevel ?>" required>
+                                    <input id="inputLevel" type="text" class="form-control" name="qualifLevel" value="<?= htmlentities($training->qualifLevel) ?>" required>
                                 </div>
                             </div>
                             <div class="col-12 my-3">
                                 <label for="inputDescription" class="form-label">Description Formation</label>                                        
-                                <textarea class="form-control" id="inputDescription" rows="3" name="description" required><?= $training->description ?></textarea>
+                                <textarea class="form-control" id="inputDescription" rows="3" name="description" required><?= htmlentities($training->description) ?></textarea>
                             </div>
                 
                             <div class="modal-footer">
