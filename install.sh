@@ -54,11 +54,11 @@ docker-compose -f docker-compose.yaml up -d
 ############
 # COMPOSER #
 ############
-apt install -y composer
+apt install -y php8.2-dom php8.2-gd php8.2-zip composer
 cd apeaj
 composer install --no-interaction --no-dev
 cd ..
-chown -R root:www-data apeaj
+chown -R www-data:www-data apeaj
 chmod -R 770 apeaj
 
 ###############
