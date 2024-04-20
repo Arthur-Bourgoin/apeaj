@@ -24,7 +24,7 @@ apt install -y unzip
 wget https://github.com/Arthur-Bourgoin/apeaj/archive/refs/heads/main.zip
 unzip main.zip
 mv apeaj-main apeaj && mv apeaj/docker-compose.yaml .
-rm apeaj/install.sh main.zip
+rm -f apeaj/install.sh main.zip
 
 ############
 # SET MDNS #
@@ -35,13 +35,9 @@ apt install -y avahi-daemon libnss-mdns avahi-utils
 if ! grep -q "mdns4_minimal \[NOTFOUND=return\] dns myhostname" /etc/nsswitch.conf; then
     new_line="hosts: files mdns4_minimal [NOTFOUND=return] dns myhostname"
     sed -i "s/^hosts:.*$/$new_line/" /etc/nsswitch.conf
-    echo "modif"
-    sleep 1
 fi
-echo "non modif"
-sleep 1
 systemctl restart avahi-daemon
-echo "test mdns"
+echo "##### TEST MDNS #####"
 avahi-resolve -n -4 apeaj.local
 sleep 1
 
@@ -64,7 +60,7 @@ chmod -R 770 apeaj
 ###############
 # SET IPTABLE #
 ###############
-DEBIAN_FRONTEND=noninteractive apt install -y iptables iptables-persistent^
+DEBIAN_FRONTEND=noninteractive apt install -y iptables iptables-persistent
 
 iptables -F INPUT
 iptables -F OUTPUT
@@ -76,9 +72,9 @@ iptables -A INPUT -i lo -j ACCEPT
 iptables -A OUTPUT -o lo -j ACCEPT
 
 iptables -A INPUT -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A INPUT -p tcp --sport 80 -m state --state ESTABLISHED -j ACCEPT
+iptables -A INPUT -p tcp --sport 80 -m state --state ESTABLISHED -j ACCEPT #pour pouvoir communiquer avec le conteneur docker
 iptables -A INPUT -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A INPUT -p tcp --sport 443 -m state --state ESTABLISHED -j ACCEPT
+iptables -A INPUT -p tcp --sport 443 -m state --state ESTABLISHED -j ACCEPT #pour pouvoir communiquer avec le conteneur docker
 
 iptables -A OUTPUT -p tcp --sport 80 -m state --state ESTABLISHED -j ACCEPT
 iptables -A OUTPUT -p tcp --sport 443 -m state --state ESTABLISHED -j ACCEPT
