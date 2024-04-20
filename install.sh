@@ -86,5 +86,3 @@ iptables -A OUTPUT -p udp --sport 5353 -j ACCEPT
 
 iptables-save > /etc/iptables/rules.v4
 systemctl enable netfilter-persistent.service
-
-wget https://raw.githubusercontent.com/Arthur-Bourgoin/apeaj/main/install.sh
