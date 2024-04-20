@@ -77,7 +77,9 @@ iptables -A INPUT -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A INPUT -p tcp --sport 443 -m state --state ESTABLISHED -j ACCEPT #pour pouvoir communiquer avec le conteneur docker
 
 iptables -A OUTPUT -p tcp --sport 80 -m state --state ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT #pour pouvoir communiquer avec le conteneur docker
 iptables -A OUTPUT -p tcp --sport 443 -m state --state ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 443 -m state --state ESTABLISHED -j ACCEPT #pour pouvoir communiquer avec le conteneur docker
 
 iptables -A INPUT -p udp --dport 5353 -j ACCEPT
 iptables -A OUTPUT -p udp --sport 5353 -j ACCEPT
