@@ -64,20 +64,27 @@ chmod -R 770 apeaj
 ###############
 # SET IPTABLE #
 ###############
-DEBIAN_FRONTEND=noninteractive apt install -y iptables iptables-persistent
+DEBIAN_FRONTEND=noninteractive apt install -y iptables iptables-persistent^
+
+iptables -F INPUT
+iptables -F OUTPUT
+
 iptables -P INPUT DROP
 iptables -P OUTPUT DROP
+
 iptables -A INPUT -i lo -j ACCEPT
 iptables -A OUTPUT -o lo -j ACCEPT
+
 iptables -A INPUT -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT -p tcp --sport 80 -m state --state ESTABLISHED -j ACCEPT
+iptables -A INPUT -p tcp --sport 80 -m state --state ESTABLISHED -j ACCEPT
 iptables -A INPUT -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A INPUT -p tcp --sport 443 -m state --state ESTABLISHED -j ACCEPT
+
+iptables -A OUTPUT -p tcp --sport 80 -m state --state ESTABLISHED -j ACCEPT
 iptables -A OUTPUT -p tcp --sport 443 -m state --state ESTABLISHED -j ACCEPT
-iptables -A INPUT --dport 5353 -j ACCEPT
-iptables -A OUTPUT --sport 5353 -j ACCEPT
+
+iptables -A INPUT -p udp --dport 5353 -j ACCEPT
+iptables -A OUTPUT -p udp --sport 5353 -j ACCEPT
+
 iptables-save > /etc/iptables/rules.v4
 systemctl enable netfilter-persistent.service
-
-###########
-# HOTSPOT #
-###########
