@@ -50,10 +50,10 @@ docker-compose -f docker-compose.yaml up -d
 ############
 # COMPOSER #
 ############
-apt install -y php8.2-dom php8.2-gd php8.2-zip composer
-cd apeaj
-composer install --no-interaction --no-dev
-cd ..
+#apt install -y php8.2-dom php8.2-gd php8.2-zip composer
+#cd apeaj
+#composer install --no-interaction --no-dev
+#cd ..
 chown -R www-data:www-data apeaj
 chmod -R 770 apeaj
 
@@ -80,6 +80,9 @@ iptables -A OUTPUT -p tcp --sport 80 -m state --state ESTABLISHED -j ACCEPT
 iptables -A OUTPUT -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT #pour pouvoir communiquer avec le conteneur docker
 iptables -A OUTPUT -p tcp --sport 443 -m state --state ESTABLISHED -j ACCEPT
 iptables -A OUTPUT -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT #pour pouvoir communiquer avec le conteneur docker
+
+iptables -A INPUT -p udp --sport 53 -j ACCEPT
+iptables -A OUTPUT -p udp --dport 53 -j ACCEPT
 
 iptables -A INPUT -p udp --dport 5353 -j ACCEPT
 iptables -A OUTPUT -p udp --sport 5353 -j ACCEPT
