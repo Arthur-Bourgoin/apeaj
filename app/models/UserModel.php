@@ -153,7 +153,13 @@ class UserModel {
                 return;
             }
             $keys = ["login", "lastName", "firstName", "picture", "typePwd", "pwd", "role", "idTraining"];
-            $args["login"] = self::generateLogin($args["firstName"], $args["lastName"]);
+            $login = self::generateLogin($args["firstName"], $args["lastName"]);
+            if($login) {
+                $args["login"] = $login;
+            } else {
+                Feedback::setError("Le login est déjà utilisé, vous devez modifier le nom ou le prénom de l'utilisateur.");
+                return;
+            }
             $args["pwd"] = password_hash($args["pwd"], PASSWORD_BCRYPT);
             Database::getInstance()
                 ->prepare("INSERT INTO users (login, lastName, firstName, picture, typePwd, pwd, role, idTraining)
@@ -238,12 +244,13 @@ class UserModel {
      * @return void
      */
     private static function generateLogin(string $fName, string $lName) {
-        $res = Database::getInstance()->prepare("SELECT * FROM users WHERE lastName = :lName AND firstName = :fName");
-        $res->execute(array("lName" => $lName, "fName" => $fName));
-        if( ($num=$res->rowCount()) > 1)
-            return strtolower($fName) . "." . strtolower($lName) . ($num+1);
+        $login = strtolower($fName) . "." . strtolower($lName);
+        $res = Database::getInstance()->prepare("SELECT * FROM users WHERE login = :login");
+        $res->execute(array("login" => $login));
+        if($res->rowCount() > 0)
+            return false;
         else
-            return strtolower($fName) . "." . strtolower($lName);
+            return $login;
     }
 
 }

@@ -96,7 +96,9 @@ ob_start();
 
     <!-- Liste des étudiants de la formation -->
     <div class="row mx-0">
-      <div class="fw-bold fs-4 my-4">Liste des Etudiants de la formation</div>
+      <div class="d-flex justify-content-between p-0 my-4">
+        <div class="fw-bold fs-4">Liste des étudiants de la formation</div>
+      </div>
     </div>
 
     <div class="row g-3 mb-4">
