@@ -229,6 +229,13 @@ class FormModel {
                 Feedback::setError("Mise à jour impossible, la fiche n'existe pas.");
                 return;
             }
+            foreach($args as &$arg) {
+                if($arg === "") {
+                    $arg = null;
+                } elseif($arg === False) {
+                    $arg = 0;
+                }
+            }
             Database::getInstance()
                 ->prepare("UPDATE form 
                            SET studentLastName = :studentLastName,

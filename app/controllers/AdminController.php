@@ -310,8 +310,8 @@ class AdminController extends UserController
             $files[] = $filename;
         }
         closedir($dir);
-        unset($files[0]);
-        unset($files[1]);
+        unset($files[array_search(".", $files)]);
+        unset($files[array_search("..", $files)]);
         $files = array_values($files);
         $pictos = json_encode($files);
         $sessions = SessionModel::getSessionNotFinish();
